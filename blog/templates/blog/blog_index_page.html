@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background-color: rgb(248, 206, 128);
+        color: black;
+        background-image: url("https://wallpaperaccess.com/full/360461.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 180px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 88px;
+        color: white;
+        padding-left: 20px;
+    }
+
+    #post {
+        /* text-align: center; */
+        /* border: solid 3px red; */
+        border-bottom: solid 3px black;
+        margin: 3px;
+        width: 60%;
+    }
+
+    #post_title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 40px;
+    }
+    #post_container{
+        margin-top: 5%;
+    }
+    #date {
+        text-align: left;
+        font-family: 'Bebas Neue', cursive;
+        font-size: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    {% extends "base.html" %}
+
+    {% load wagtailcore_tags wagtailimages_tags %}
+
+
+    {% block body_class %}template-blogindexpage{% endblock %}
+
+    {% block content %}
+    <div id="title">{{ page.title }}</div>
+
+    <div class="intro">{{ page.intro|richtext }}</div>
+
+
+
+    <div id="post_container">
+        {% for post in blogpages %}
+        {% with post=post.specific %}
+            <div id="post">
+                <h2 id="post_title"><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+                <p id="date">{{post.date}}</p>
+                <p>{{ post.intro }}</p>
+            </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+
+    {% endblock %}
+</body>
+
+</html>

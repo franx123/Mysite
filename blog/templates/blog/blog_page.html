@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background-color: rgb(248, 206, 128);
+        color: black;
+        background-image: url("https://wallpaperaccess.com/full/360461.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 190px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #web_title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 88px;
+        color: white;
+    }
+
+    #title {
+        font-family: 'Oswald', sans-serif;
+    }
+
+    #image {
+        width: 100%;
+        float: right;
+    }
+    #image_comment{
+        text-decoration: wavy;
+    }
+    #button {
+        background-color: rgb(248, 206, 128);
+        width: 200px;
+        height: 30px;
+        border-radius: 10px;
+    }
+
+    #button:hover {
+        background-color: rgb(240, 171, 44);
+    }
+</style>
+
+<body>
+    {% extends "base.html" %}
+
+    {% load wagtailcore_tags wagtailimages_tags %}
+
+    {% block body_class %}template-blogpage{% endblock %}
+
+    {% block content %}
+    <h1 id="web_title">{{ page.get_parent.title }}</h1>
+    <h1 id="title">{{ page.title }}</h1>
+    <p class="meta">{{ page.date }}</p>
+    <h3>{{ page.intro }}</h3>
+
+   
+    <div id="image">
+        {% for item in page.gallery_images.all %}
+        <div style="float: left; margin: 10px">
+            {% image item.image original %}
+            <p id="img_comment">{{ item.caption }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="body"> {{ page.body|richtext }} </div>
+    <form action="{{ page.get_parent.url }}">
+        <input id="button" type="submit" value="Vuelta al indice">
+    </form>
+    {% endblock %}
+</body>
+
+</html>
